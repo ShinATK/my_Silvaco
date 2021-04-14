@@ -1,0 +1,20 @@
+# 网格定义的语法，网格点的数目或网格疏密决定了仿真的精确程度和快慢。网格的原点在左上角，往右为x正方向，往下是y的正向
+line x|y loc=<n> [spacing=<n>][tag=<c>][tri.left][tri.right]
+# x，y设定网格线垂直于x轴或y轴；
+# 默认参数：tri.left将网格矩形从左下角到右上角划分成两个三角形；
+# loc设定网格线在轴上的坐标；spacing设定在该loc处临近网格线间距；二者单位默认μm
+# tag参数可以在相应位置添加标签；
+
+# 例2-12 淀积多晶硅和定义新增加的多晶硅层的网路
+deposit polysilicon thick=0.50 divisions=10 dy=0.1 ydy=0.25
+deposit polysilicon thick=0.50 divisions=10 dy=0.02 ydy=0.25
+# deposit:淀积指令；polysilicon：淀积材料为多晶硅
+# divisions，材料层的总网格数，将新淀积层划分成divisions条网格线，简写‘div’
+# dy，网格间距（μm）；ydy，网格间距对应的位置（μm）；min.dy，最小网格间距；min.space，边界处的最凶网格间距。与loc和spacing类似。其中ydy是从新淀积层表面往下的深度
+
+# 使用relax命令在定义好的网格分布上释放一些网格点，防止浪费
+# 要紧跟在initialize后使用
+[relax][x.min=<n>][x.max=<n>][y.min=<n>][y.max=<n>]
+[dir.x][dir.y][surface][dx.surf=<n>]
+# 网格释放范围由x.min,x.max,y.min,y.max共同决定。dir.x和dir.y定义后则只释放x或y方向的网格。参数surface表示释放表面的网格，dx.surf为表面处的最小网格
+
