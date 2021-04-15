@@ -1,0 +1,21 @@
+
+go atlas
+
+mesh
+x.mesh location=0.00 spac=1.0
+x.mesh location=1.00 spac=1.0
+y.mesh location=0.00 spac=0.1
+y.mesh location=1.00 spac=0.1
+
+region num=1 silicon
+
+electrode name=anode top
+electrode name=cathode bottom
+
+doping n.type conc=5e16 uniform
+model conmob fldmob
+
+solve init
+log outfile=resist.log
+solve vanode=0.05 vstep=0.05 vfinal=1 name=anode
+quit
