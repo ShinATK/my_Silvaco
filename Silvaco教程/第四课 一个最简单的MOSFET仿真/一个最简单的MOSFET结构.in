@@ -1,0 +1,41 @@
+go atlas
+
+# 两维的非均匀网格
+mesh
+x.m l=0.0 spacing=0.3
+x.m l=0.5 spacing=0.018
+x.m l=2.5 spacing=0.018
+x.m l=3 spacing=0.3
+y.m l=-0.02 spacing=0.01
+y.m l=0.0 spacing=0.01
+y.m l=0.3 spacing=0.06
+y.m l=1.0 spacing=0.2
+
+# 设定材料，电极
+region num=1 y.min=0 silicon
+region num=2 y.max=0.0 oxide
+elect num=1 name=gate x.min=0.5 length=2 y.min=-0.02 y.max=-0.02
+elect num=2 name=source left length=0.5 y.min=0.0 y.max=0.0
+elect num=3 name=drain right length=0.5 y.min=0.0 y.max=0.0
+elect num=4 name=substrate substrate
+
+# 在源极漏极掺杂，y指掺杂深度
+doping uniform p.type conc=2.e16
+doping uniform n.type conc=1.e20 x.max=0.5 y.max=0.2
+doping uniform n.type conc=1.e20 x.min=2.5 y.max=0.2
+
+# cvt迁移率模型，srh
+models cvt srh print
+
+# 电极接触类型 多晶硅栅(自对准效应，避免寄生电容)
+contact name=gate n.poly
+
+# 界面电荷(硅与二氧化硅之间接触的位置)
+interface qf=3e10
+method newton
+solve init
+solve vdrain=10
+log outf=nmosl_1.log
+solve vgate=0 vstep=0.25 vfinal=5.0 name=gate
+save outf=nmosl_1.str
+quit
