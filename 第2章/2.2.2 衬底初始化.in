@@ -1,0 +1,41 @@
+# 定义网格后，需要对衬底进行初始化
+initialize
+
+# 材料相关参数：
+# material：衬底材料
+# orientation：衬底晶向，晶向只有[100][110][111]，默认为[100]
+# rot.sub：在BCA注入模型中指明衬底方向，单位度，默认-45，表示剖面为(101)面
+# c.fraction：三元化合物中第一种材料的组分，如AlGaAs中的Al组分
+[material][orientation=<n>][rot.sub=<n>][c.fraction=<n>]
+
+# 掺杂相关参数：
+# c.impurities：衬底所含杂质的种类及密度，均匀掺杂(atom/cm3)
+# resisitivity：衬底电阻率(Ω·cm)此参数会忽略c.impurity参数且只对硼、磷、砷和锑杂质有效；
+# c.interst：衬底材料的填隙原子浓度(cm-3)
+# c.vacancy：衬底材料的空位浓度(cm-3)
+# boron、phosphorus、arsenic、antimony：用resistivity来定义掺杂浓度时指明杂质的种类
+# no.impurity：衬底不掺杂
+[c.impurities=<n> | resistivity=<n>][c.interst=<n>]
+[c.vacancy=<n>][boron | phosphorus | arsenic | antimony]
+
+# 仿真维度相关参数
+# one.d,two.d,auto：仿真初始维度，one.d需要设定x.locat参数。默认auto
+# x.locat：2D Mesh结构中指明进行一维仿真的位置
+# cylindrical：圆柱形对称结构(对称轴为X=0.0)的边界线
+# 从文件定义初始化及其说明
+# infile：导入结构文件(包含结构或强度分布信息)
+# structure、intensity：初始化的类型，默认为结构
+[no.impurity][one.d | two.d | auto][x.locat=<n>][cylindrical]
+[infile=<c>][structure | intensity]
+
+# 结构相关参数
+# space.mult：设定全局的spacing的乘数
+# interval.r：邻近网格线间距的最大比值，默认1.5
+# line.data：指定在仿真时显示网格线的位置
+# scale：输入网格线的放大比率，默认为1.0
+# flip.y：结构对X轴做镜像，即将衬底的底部置为最表面，这时Y轴的网格位置是正负变号的
+# depth.str、width.str：初始衬底的深度和宽度(μm)
+[space.mult=<n>][interval.r=<n>][line.data][scale=<n>]
+[flip.y][depth.str=<n>][width.str=<n>]
+
+
