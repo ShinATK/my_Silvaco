@@ -1,0 +1,53 @@
+go atlas
+
+set Ldb=4
+set Lb=2
+set Lbb=14
+set h=3e-3
+set Lf=$"Ldrain"+$"Ldb"
+set tt=$"Lb"+$"Lbb"
+set b=0e18
+set ds=4e-3
+set ratio=$"ds"*0.01*1e3
+set bde=2
+set bh=2e-3
+# *************** mesh***************
+mesh
+x.mesh l=0 spac=1
+x.mesh l=100 spac=1
+y.mesh l=0 spac=0.0005*($"ratio")
+y.mesh l=$"ds" spac=0.0005*($"ratio")
+y.mesh l=300e-3 spac=0.1
+# *************** regions*************** 
+region number=1 x.min=0 x.max=100 y.min=0 y.max=$"ds" material=pentacene
+# region number=2 x.min=0 x.max=100 y.min=0.5*$"ds" y.max=$"ds" material=organic
+region number=3 x.min=$"Lf" x.max=$"Lf"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=4 x.min=$"LF"+$"tt" x.max=$"LF"+$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=5 x.min=$"Lf"+2*$"tt" x.max=$"Lf"+2*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=6 x.min=$"Lf"+3*$"tt" x.max=$"Lf"+3*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=7 x.min=$"Lf"+4*$"tt" x.max=$"Lf"+4*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=8 x.min=$"Lf"+5*$"tt" x.max=$"Lf"+5*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
+region number=9 x.min=0 x.max=100 y.min=$"ds" y.max=300e-3 material=SIO2
+region number=10 x.min=$"Lf"+$"Lb"+$"bde" x.max=$"Lf"+$"tt"+$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+region number=11 x.min=$"Lf"+$"tt"+$"Lb"+$"bde" x.max=$"Lf"+2*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+region number=12 x.min=$"Lf"+2*$"tt"+$"Lb"+$"bde" x.max=$"Lf"+3*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+region number=13 x.min=$"Lf"+3*$"tt"+$"Lb"+$"bde" x.max=$"Lf"+4*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+region number=14 x.min=$"Lf"+4*$"tt"+$"Lb"+$"bde" x.max=$"Lf"+5*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+# *************** electrodes *************** 
+elec num=1 name=gate x.min=0 x.max=100 y.min=300e-3 y.max=300e-3
+elec num=2 name=source x.min=0 x.max=5 y.min=0 y.max=0
+elec num=3 name=drain x.min=95 x.max=100 y.min=0 y.max=0
+# *************** dopings *************** 
+doping region=1 p-type uniform conc=1e25
+
+models cvt srh print
+
+method newton
+
+# 数据处理
+solve init
+solve vdrain=10
+log outf=nmosl_1.log
+solve vgate=0 vstep=0.25 vfinal=5.0 name=gate
+save outf=my_file.str
+quit
