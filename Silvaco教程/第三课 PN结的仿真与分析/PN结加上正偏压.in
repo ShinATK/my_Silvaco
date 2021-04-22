@@ -20,6 +20,6 @@ save outf=diode.str
 tonyplot diode.str
 method newton
 log outfile=diode.log
-solve vanode=0.1 vstep=0.1 vfinal=2 name=anode
-tonyplot diode.log
+solve vanode=5 vstep=-0.1 vfinal=-5 name=anode
+# tonyplot diode.log
 quit
