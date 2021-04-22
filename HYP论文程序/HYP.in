@@ -39,4 +39,5 @@ elec num=2 name=source x.min=0 x.max=5 y.min=0 y.max=0
 elec num=3 name=drain x.min=95 x.max=100 y.min=0 y.max=0
 
 save outf=my_file.str
+tonyplot my_file.str
 quit
