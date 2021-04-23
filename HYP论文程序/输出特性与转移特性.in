@@ -1,0 +1,54 @@
+go atlas
+# 两维的非均匀网格
+mesh
+x.m l=0.0 spacing=0.3
+x.m l=0.5 spacing=0.018
+x.m l=2.5 spacing=0.018
+x.m l=3 spacing=0.3
+y.m l=-0.02 spacing=0.01
+y.m l=0.0 spacing=0.01
+y.m l=0.3 spacing=0.06
+y.m l=1.0 spacing=0.2
+# 设定材料，电极
+region num=1 y.min=0 y.max=0.1 pentanece 
+region num=2 y.min=0.1 y.max=100.0 SIO2
+elect num=1 name=gate y.min=100
+elect num=2 name=source left length=5 y.max=0.0
+elect num=3 name=drain right length=5 y.max=0.0
+# 在源极漏极掺杂，y指掺杂深度
+doping uniform p.type conc=2.e16
+doping uniform n.type conc=1.e20 x.max=0.5 y.max=0.2
+doping uniform n.type conc=1.e20 x.min=2.5 y.max=0.2
+# cvt迁移率模型，srh
+models cvt srh print
+# 电极接触类型 多晶硅栅(自对准效应，避免寄生电容)
+# contact name=gate n.poly
+# 界面电荷(硅与二氧化硅之间接触的位置)
+# interface qf=3e10
+method newton
+
+# 转移特性
+solve init
+solve vdrain=1
+log outf=nmosl_1.log
+solve vgate=0 vstep=0.25 vfinal=3.0 name=gate
+save outf=nmosl_1.str
+tonyplot nmosl_1.log -set nmosl_1_log.set
+log off
+
+# 输出特性
+#solve vgate=1.1 outf=solve_tmp1
+#solve vgate=2.2 outf=solve_tmp2
+#solve vgate=3.3 outf=solve_tmp3
+#load infile=solve_tmp1
+#log outf=nmosl_2.log
+#solve name=drain vdrain=0 vfinal=5 vstep=0.5
+#load infile=solve_tmp2
+#log outf=nmosl_3.log
+#solve name=drain vdrain=0 vfinal=5 vstep=0.5
+#load infile=solve_tmp3
+#log outf=nmosl_4.log
+#solve name=drain vdrain=0 vfinal=5 vstep=0.5
+#tonyplot -overlay -st nmosl_2.log nmosl_3.log nmosl_4.log -set nmosl_4.set
+
+quit

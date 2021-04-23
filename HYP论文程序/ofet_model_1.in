@@ -1,0 +1,24 @@
+go atlas
+
+mesh
+x.mesh location=0 spacing=1
+x.mesh location=100 spacing=1
+y.mesh location=0 spacing=1e-5
+y.mesh location=4e-3 spacing=1e-5
+y.mesh location=4e-3+4e-4 spacing=1e-4
+y.mesh location=4e-3+8e-4 spacing=1e-4
+
+region num=1 y.min=0 y.max=4e-3 silicon
+region num=2 y.min=4e-3 y.max=4e-3+4e-4 SIO2
+
+elec num=1 name=source x.min=0 x.max=5 y.min=0 y.max=4e-4
+elec num=2 name=drain x.min=95 x.max=100 y.min=0 y.max=4e-4
+# elec num=1 name=source top left length=5
+# elec num=2 name=drain top right length=5
+elec num=3 name=gate y.min=4e-3+4e-4 y.max=4e-3+8e-4
+
+save outf=ofet_model_1.str
+
+
+
+quit

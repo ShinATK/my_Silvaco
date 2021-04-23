@@ -1,5 +1,6 @@
 go atlas
 
+set Ldrain=5
 set Ldb=4
 set Lb=2
 set Lbb=14
@@ -19,7 +20,7 @@ y.mesh l=0 spac=0.0005*($"ratio")
 y.mesh l=$"ds" spac=0.0005*($"ratio")
 y.mesh l=300e-3 spac=0.1
 # *************** regions*************** 
-region number=1 x.min=0 x.max=100 y.min=0 y.max=$"ds" material=organic
+region number=1 x.min=0 x.max=100 y.min=0 y.max=$"ds" material=pentacene
 # region number=2 x.min=0 x.max=100 y.min=0.5*$"ds" y.max=$"ds" material=organic
 region number=3 x.min=$"Lf" x.max=$"Lf"+$"Lb" y.min=0 y.max=$"h" material=SIO2
 region number=4 x.min=$"LF"+$"tt" x.max=$"LF"+$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
@@ -28,7 +29,7 @@ region number=6 x.min=$"Lf"+3*$"tt" x.max=$"Lf"+3*$"tt"+$"Lb" y.min=0 y.max=$"h"
 region number=7 x.min=$"Lf"+4*$"tt" x.max=$"Lf"+4*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
 region number=8 x.min=$"Lf"+5*$"tt" x.max=$"Lf"+5*$"tt"+$"Lb" y.min=0 y.max=$"h" material=SIO2
 region number=9 x.min=0 x.max=100 y.min=$"ds" y.max=300e-3 material=SIO2
-region number=10 x.min=$"Lf"+$"Lb"+$"bde" x.max=$"Lf"+$"tt"+$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
+region number=10 x.min=$"Lf"+$"Lb"+$"bde" x.max=$"Lf"+$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
 region number=11 x.min=$"Lf"+$"tt"+$"Lb"+$"bde" x.max=$"Lf"+2*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
 region number=12 x.min=$"Lf"+2*$"tt"+$"Lb"+$"bde" x.max=$"Lf"+3*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
 region number=13 x.min=$"Lf"+3*$"tt"+$"Lb"+$"bde" x.max=$"Lf"+4*$"tt"-$"bde" y.min=$"bh" y.max=$"ds" material=SIO2
