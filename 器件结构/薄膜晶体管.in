@@ -43,21 +43,21 @@ elec  num=4  x.min=18.0 x.max=20.0  y.min=0.   y.max=0.   name=drain
 #
 #  **************** doping profiles  ****************
 
-doping     reg=1  uniform conc=7.e14 n.type
-doping     reg=1  gauss conc=3.e18 n.type x.right=5 char=0.3
-doping     reg=1  gauss conc=3.e18 n.type x.left=15 char=0.3
+doping     reg=1  uniform conc=7.e14 p.type
+doping     reg=1  gauss conc=3.e18 p.type x.right=5 char=0.3
+doping     reg=1  gauss conc=3.e18 p.type x.left=15 char=0.3
 
 
 #   Set parameters for amorphus silicon
 #
-material region=1 affinity=2.1 permittivity=3.5 mun=1e-2 mup=1e-4 nc300=1e20 nv300=1e20 eg300=2.1
+material region=1 affinity=2.1 permittivity=3.5 mun=1e-4 mup=1e-2 nc300=1e20 nv300=1e20 eg300=2.1
 #
 defects nta=1.e21 ntd=1.e21 wta=0.033 wtd=0.049 \
   nga=1.5e15 ngd=1.5e15 ega=0.62 egd=0.78 wga=0.15 wgd=0.15 \
   sigtae=1.e-17 sigtah=1.e-15 sigtde=1.e-15 sigtdh=1.e-17  \ 
   siggae=2.e-16 siggah=2.e-15 siggde=2.e-15 siggdh=2.e-16  
 #
-contact	num=1 alum
+contact num=1 alum
 models  temp=300  
 #
 
@@ -73,20 +73,20 @@ tonyplot  tftex01_0.str -set tftex01_0.set
 #
 
 method  gummel newton 
-solve  vgate=-1.0
+solve  vgate=1.0
 
 method  newton 
-solve  vdrain=0.1
-solve  vdrain=0.2
-solve  vdrain=0.5
-solve  vdrain=1 vfinal=5 vstep=1 name=drain
+solve  vdrain=-0.1
+solve  vdrain=-0.2
+solve  vdrain=-0.5
+solve  vdrain=-1 vfinal=-60 vstep=-1 name=drain
 #
 # Solve id versus vg curve
 #
 
 #
 log outf=tftex01_1.log 
-solve vstep=0.5 vfinal=20. name=gate vdrain=5 
+solve vgate=20 vstep=-0.5 vfinal=-60. name=gate vdrain=-60
 #
 tonyplot  tftex01_1.log  -set tftex01_log.set
 
