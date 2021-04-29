@@ -66,7 +66,7 @@ solve init
 
 save outf=tftex01_0.str
 
-tonyplot  tftex01_0.str -set tftex01_0.set
+# tonyplot  tftex01_0.str -set tftex01_0.set
  
 #
 # Electrode #1 - Gate, #2 - Substrate, #3 - Source, #4 - Drain
@@ -86,7 +86,7 @@ solve  vdrain=-1 vfinal=-60 vstep=-1 name=drain
 
 #
 log outf=tftex01_1.log 
-solve vgate=20 vstep=-0.5 vfinal=-60. name=gate vdrain=-60
+solve vgate=60 vstep=-0.5 vfinal=-60. name=gate vdrain=-60
 #
 tonyplot  tftex01_1.log  -set tftex01_log.set
 
