@@ -93,19 +93,19 @@ solve vgate=60 vstep=-0.5 vfinal=-60. name=gate vdrain=-60
 
 
 # 输出特性曲线
-solve vgate=-10 outf=solve_tmp10
-solve vgate=-20 outf=solve_tmp20
-solve vgate=-30 outf=solve_tmp30
+solve vgate=-5 outf=solve_tmp10
+solve vgate=-10 outf=solve_tmp20
+solve vgate=-20 outf=solve_tmp30
 load infile=solve_tmp10
 log outf=tftex01_2.log
-solve name=drain vdrain=0 vfinal=20 vstep=0.5
+solve name=drain vdrain=0 vfinal=-10 vstep=-0.5
 load infile=solve_tmp20
 log outf=tftex01_3.log
-solve name=drain vdrain=0 vfinal=20 vstep=0.5
+solve name=drain vdrain=0 vfinal=-10 vstep=-0.5
 load infile=solve_tmp30
 log outf=tftex01_4.log
-solve name=drain vdrain=0 vfinal=20 vstep=0.5
-tonyploy -overlay -st tftex01_2.log tftex01_3.log tftex01_4.log -set tftex01_4.set
+solve name=drain vdrain=0 vfinal=-10 vstep=-0.5
+tonyploy -overlay -st tftex01_2.log tftex01_3.log tftex01_4.log -set tftex01.set
 
 
 quit
