@@ -1,9 +1,0 @@
-P3HT
-
-nc300 nv300总状态数		1e20cm-3
-eg300价带带隙		2.1eV
-affinity结合能			2.9eV
-permittivity相对介电常数	3.5
-mup空穴迁移率		0.01cm2V-1s-1
-mun电子迁移率		0.0001cm2V-1s-1
-电荷占据能级概率为费米狄拉克统计分布
