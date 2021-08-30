@@ -1,0 +1,32 @@
+go atlas
+
+mesh
+x.mesh location=0 spacing=1
+x.mesh location=30 spacing=1
+y.mesh location=0 spacing=0.01
+y.mesh location=1 spacing=0.01
+
+region number=1 x.max=10 y.max=0.2 material=gold
+region number=2 x.min=20 y.max=0.2 material=gold
+region number=3 x.min=10 x.max=20 y.max=0.2 material=air
+region number=4 y.min=0.2 y.max=0.5 material=pentacene
+region number=5 y.min=0.5 y.max=1 material=oxide
+
+elect number=1 name=gate y.min=0.95 y.max=1
+elect number=2 name=source x.max=10 y.max=0.2
+elect number=3 name=drain x.min=20 y.max=0.2
+elect number=4 name=substrate y.min=1
+
+doping uniform region=4 p-type conc=1.0e14
+
+models conmob fldmob srh fermidirac
+
+solve init
+# solve vgate=-20
+# solve vgate=-40
+# solve vgate=-60
+
+save outf=my_otft.str
+tonyplot my_otft.str
+
+quit

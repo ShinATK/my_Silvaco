@@ -1,0 +1,13 @@
+go atlas
+
+mesh infile=my_otft.str
+
+solve init
+solve vdrain=-20
+log outf=my_otft_test.log
+solve vgate=10 vstep=-0.5 vfinal=-60.0 name=gate
+save outf=my_otft_test.str
+tonyplot my_otft_test.log -set my_otft_test.set
+log off
+
+quit
