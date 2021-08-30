@@ -1,0 +1,23 @@
+go atlas
+
+mesh infile=my_otft.str
+
+solve vgate=0 outf=solve_tmp1
+solve vgate=-5 outf=solve_tmp2
+solve vgate=-10 outf=solve_tmp3
+
+load infile=solve_tmp1
+log outf=my_otft_output_1.log
+solve name=drain vdrain=0 vfinal=-20 vstep=-0.5
+
+load infile=solve_tmp2
+log outf=my_otft_output_2.log
+solve name=drain vdrain=0 vfinal=-20 vstep=-0.5
+
+load infile=solve_tmp3
+log outf=my_otft_output_3.log
+solve name=drain vdrain=0 vfinal=-20 vstep=-0.5
+
+tonyplot -overlay -st my_otft_output_1.log my_otft_output_2.log my_otft_output_3.log
+
+quit
