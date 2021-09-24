@@ -1,8 +1,7 @@
 go atlas
 
-mesh infile=my_otft.str
+mesh infile=my_otft_init.str
 
-solve init
 solve vdrain=-20
 log outf=my_otft_test.log
 solve vgate=10 vstep=-0.5 vfinal=-60.0 name=gate

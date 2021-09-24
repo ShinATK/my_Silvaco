@@ -1,0 +1,67 @@
+go atlas
+
+mesh
+x.mesh location=0 spacing=0.01
+x.mesh location=0.3 spacing=0.01
+y.mesh location=0 spacing=0.01
+y.mesh location=0.02 spacing=0.001
+y.mesh location=0.03 spacing=0.001
+y.mesh location=0.1 spacing=0.01
+
+region number=1 x.max=0.1 y.max=0.02 material=gold
+region number=2 x.min=0.2 y.max=0.02 material=gold
+region number=3 x.min=0.1 x.max=0.2 y.max=0.02 material=air
+region number=4 y.min=0.02 y.max=0.03 material=pentacene
+region number=5 y.min=0.03 y.max=0.1 material=oxide
+
+elect number=1 name=gate y.min=0.08 y.max=0.1
+elect number=2 name=source x.max=0.1 y.max=0.02
+elect number=3 name=drain x.min=0.2 y.max=0.02
+elect number=4 name=substrate y.min=0.1
+
+doping uniform region=4 p-type conc=1.0e14
+
+# material region=4 name=Pentacene\affinity=2.8 eg300=2.2 nc300=1.0e21\nv300=1.0e21 permittivity=4.0\ mun=5e-5 mup=0.85 \ntc.gauss=2.0e27 sigc.gauss=0.15
+
+
+# defects nta=1.e21 ntd=1.e21 wta=0.033 wtd=0.049 \
+  nga=1.5e15 ngd=1.5e15 ega=0.62 egd=0.78 wga=0.05 wgd=0.05 \
+  sigtae=1.e-17 sigtah=1.e-15 sigtde=1.e-15 sigtdh=1.e-17  \ 
+  siggae=2.e-16 siggah=2.e-15 siggde=2.e-15 siggdh=2.e-16 
+
+# mobility deltaep.pfmob=1.7992e-2 betap.pfmob=7.758e-5
+# models conmob srh fermidirac pfmob.p 
+
+models temp=300
+
+method itlimit=30 newton
+
+solve init
+save outf=my_otft_init.str
+
+solve vgate=-0.8
+save outf=my_otft_-0.8.str
+
+solve vgate=-1
+save outf=my_otft_-1.str
+
+solve vgate=-5
+save outf=my_otft_-5.str
+
+solve vgate=-20
+save outf=my_otft_-20.str
+
+# solve vgate=-40
+# save outf=my_otft_-40.str
+
+quit
+
+# trans
+solve vdrain=-20
+log outf=my_otft_trans.log
+solve vgate=10 vstep=-0.5 vfinal=-20.0 name=gate
+save outf=my_otft_trans.str
+tonyplot my_otft_trans.log
+log off
+
+quit

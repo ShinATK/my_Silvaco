@@ -1,0 +1,61 @@
+go atlas
+#
+Title Organic Thin Film Transistor Simulation
+#
+mesh smooth=1 space.mult=1 width=100
+#
+x.m l=0.00 spac=0.1
+x.m l=10 spac=0.05
+x.m l=15 spac=0.1
+x.m l=20 spac=0.05
+x.m l=30 spac=0.1
+#
+y.m l=-0.03 spac=0.005
+y.m l=0.00 spac=0.001
+y.m l=0.015 spac=0.001
+y.m l=0.03 spac=0.001
+y.m l=0.0325 spac=0.01
+y.m l=0.0357 spac=0.01
+y.m l=0.0557 spac=0.01
+#
+# regions
+#
+region num=1 material=Pentacene x.min=0 x.max=30 y.min=0.00 y.max=0.03 name=Pentacene
+region num=2 material=Al2O3 y.min=0.03 y.max=0.0357
+region num=3 material=Air x.min=10 x.max=20 y.min=-0.03 y.max=0.00
+
+# electrode
+#
+electrode num=1 material=Gold name=source x.max=10.0 y.min=-0.03 y.max=0.00
+electrode num=2 material=Aluminum name=gate y.min=0.0357 y.max=0.0557
+electrode num=3 material=Gold name=drain x.min=20.0 y.min=-0.03 y.max=0.00
+#
+# doping
+doping reg=1 uniform conc=3e17 p.type name=pentacene
+#
+material name=Pentacene\affinity=5 eg300=2.8 nc300=1.0e21\nv300=1.0e21 permittivity=4.0\ mun=5e-5 mup=0.85
+#
+material name=Al2O3 permittivity=4.5
+#
+contact name=source workfun=5.1
+contact name=drain workfun=5.1
+contact name=gate workfun=4.28
+#
+defects fast dfile=don.dat afile=acc.dat \nta=0 ntd=0\ nga=5e17 ngd=1.5e18 ega=0.4 ngd=0.4 wga=0.1 wgd=0.1
+
+mobility deltaep.pfmob=1.7992e-2 betap.pfmob=7.758e-5
+model pfmob.p print
+#output e.field j.electron j.hole j.conduction j.total e.velocity h.velocity ey.field flowline e.mobility h.mobility qss e.temp charge recomb val.band con.band qfn qfp j.disp photogen impact tot.doping \ u.srh u.rad
+
+method carriers=1 hole maxtraps=100
+
+solve init
+save outf=ofet_copy_init.str
+
+solve vgate=-5
+save outf=ofet_copy_vg-5.str
+
+tonyplot ofet_copy_vg-5.str
+
+quit
+

@@ -1,32 +1,47 @@
 go atlas
 
 mesh
-x.mesh location=0 spacing=1
-x.mesh location=30 spacing=1
+x.mesh location=0 spacing=0.01
+x.mesh location=3 spacing=0.01
 y.mesh location=0 spacing=0.01
 y.mesh location=1 spacing=0.01
 
-region number=1 x.max=10 y.max=0.2 material=gold
-region number=2 x.min=20 y.max=0.2 material=gold
-region number=3 x.min=10 x.max=20 y.max=0.2 material=air
-region number=4 y.min=0.2 y.max=0.5 material=pentacene
-region number=5 y.min=0.5 y.max=1 material=oxide
+region number=1 x.max=1 y.max=0.2 material=gold
+region number=2 x.min=2 y.max=0.2 material=gold
+region number=3 x.min=1 x.max=2 y.max=0.2 material=air
+region number=4 y.min=0.2 y.max=0.4 material=pentacene
+region number=5 y.min=0.4 y.max=1 material=oxide
 
 elect number=1 name=gate y.min=0.95 y.max=1
-elect number=2 name=source x.max=10 y.max=0.2
-elect number=3 name=drain x.min=20 y.max=0.2
+elect number=2 name=source x.max=1 y.max=0.2
+elect number=3 name=drain x.min=2 y.max=0.2
 elect number=4 name=substrate y.min=1
 
 doping uniform region=4 p-type conc=1.0e14
 
-models conmob fldmob srh fermidirac
+material region=4 name=Pentacene\ntc.gauss=2.0e22 sigc.gauss=0.15 ntv.gauss=2.0e22 sigv.gauss=0.15 de=1.78
+
+models conmob fldmob srh fermidirac pfmob 
 
 solve init
-# solve vgate=-20
-# solve vgate=-40
-# solve vgate=-60
+save outf=my_otft_init.str
 
-save outf=my_otft.str
-tonyplot my_otft.str
+# solve vgate=-1
+# save outf=my_otft_-1.str
+
+# solve vgate=-5
+# save outf=my_otft_-5.str
+
+solve vgate=-40
+save outf=my_otft_-40.str
+
+quit
+
+solve vdrain=-20
+log outf=my_otft_trans.log
+solve vgate=10 vstep=-0.5 vfinal=-60.0 name=gate
+save outf=my_otft_trans.str
+tonyplot my_otft_trans.log
+log off
 
 quit
